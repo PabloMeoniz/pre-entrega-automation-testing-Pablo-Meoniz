@@ -19,24 +19,37 @@ def test_login(driver):
     titulo = driver.find_element(By.CSS_SELECTOR, "div.header_secondary_container .title").text #busca el titulo de la pagina
     assert titulo == 'Products' #verifica que el titulo sea PRODUCTS
 """
+
+"""
 def test_catalogo(driver):
     login_sauce_demo(driver)
 
-    products = driver.find_elements(By.CLASS_NAME, 'inventory_item') #busca los productos en la pagina
-    products = driver.find_elements(By.CLASS_NAME, 'inventory_list') # busca los productos en la pagina
-    assert len(products) > 0 #verifica que haya productos en la pagina
+    products = driver.find_elements(By.CLASS_NAME, 'inventory_item')                #busca los productos en la pagina
+    products = driver.find_elements(By.CLASS_NAME, 'inventory_list')                # busca los productos en la pagina
+    assert len(products) > 0                                                        #verifica que haya productos en la pagina
+    
+                                                                                    #logeo de usuario con username y password
+                                                                                    #click al boton de login
+                                                                                    #podamos verificar el titulo pero del html
+                                                                                    #comprobar si existen productos en la pagina visibles (len()>0)
+                                                                                    #verificar elementos importantes de la pagina
+"""   
 
-    #logueo de usuario con username y password
+
+def test_carrito(driver):
+    login_sauce_demo(driver)
+
+    products = driver.find_elements(By.CLASS_NAME, 'inventory_list')                #busca los productos en la pagina
+    total_products = len(products)                                              # cuenta la cantidad de productos encontrados       
+    products[0].find_element(By.TAG_NAME, 'button').click()                          # hace click en el boton del primer producto para agregar al carrito
+
+    badge = driver.find_element(By.CLASS_NAME, 'shopping_cart_badge').text
+    assert badge ==       #busca el elemento del carrito
+     #logueo de usuario con username y password
     #click al boton de login
     #redirigir a la pagina de inventario (ventanita principal)
 
 '''
-def test_catalogo():
-    #logeo de usuario con username y password
-    #click al boton de login
-    #podamos verificar el titulo pero del html
-    #comprobar si existen productos en la pagina visibles (len()>0)
-    #verificar elementos importantes de la pagina
 def test_carrito():
     #logeo de usuario con username y password
     #click al boton de login
