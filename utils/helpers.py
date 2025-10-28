@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 URL = 'https://www.saucedemo.com/'
 USERNAME = 'standard_user'
@@ -16,14 +18,20 @@ def get_driver():
     #options.add_argument('--start-maximized') #maximizar ventana #no funciona{}
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
-    time.sleep(5)
+    #time.sleep(5)
+    driver.implicitly_wait(5)
     return driver
 
 def login_sauce_demo(driver):
     driver.get(URL)
     #INGRESAR LAS CREDENCIALES
-    driver.find_element(By.NAME, 'user-name').send_keys(USERNAME)
+
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.NAME, 'user-name'))
+    ).send_keys(USERNAME)
+    #driver.find_element(By.NAME, 'user-name').send_keys(USERNAME) #ya no se usa por que se reeplazo
     driver.find_element(By.NAME, 'password').send_keys(PASSWORD)
     driver.find_element(By.ID, 'login-button').click()
-    time.sleep(7)
+    #time.sleep(7)
+    driver.implicitly_wait(5)
     
