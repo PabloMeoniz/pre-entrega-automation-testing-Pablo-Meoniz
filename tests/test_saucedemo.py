@@ -1,4 +1,5 @@
 import pytest
+from selenium.webdriver.common.by import By
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # Agrega el directorio padre al path
@@ -11,9 +12,20 @@ def driver():
     yield driver
     driver.quit()
 
-
+"""
 def test_login(driver):
+    login_sauce_demo(driver) # evalua la funcion de login si funciona correctamente
+    assert "/inventory.html" in driver.current_url #evalua si esta en la pagina de inventario despues del login
+    titulo = driver.find_element(By.CSS_SELECTOR, "div.header_secondary_container .title").text #busca el titulo de la pagina
+    assert titulo == 'Products' #verifica que el titulo sea PRODUCTS
+"""
+def test_catalogo(driver):
     login_sauce_demo(driver)
+
+    products = driver.find_elements(By.CLASS_NAME, 'inventory_item') #busca los productos en la pagina
+    products = driver.find_elements(By.CLASS_NAME, 'inventory_list') # busca los productos en la pagina
+    assert len(products) > 0 #verifica que haya productos en la pagina
+
     #logueo de usuario con username y password
     #click al boton de login
     #redirigir a la pagina de inventario (ventanita principal)
